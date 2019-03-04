@@ -41,7 +41,7 @@ class DataCard(object):
                           ) for i in pd_series.unique()]
 
             layout = go.Layout(
-                colorway=colors,
+                colorway=self._colors,
                 bargap=0.03,
                 margin=go.layout.Margin(
                     l=45,
