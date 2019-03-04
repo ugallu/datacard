@@ -13,6 +13,8 @@ init_notebook_mode(connected=True)
 class DataCard(object):
     def __init__(self, pandas_obj):
         self._obj = pandas_obj
+        self._color_scheme = ['#000000', '#839788','#9368B7','#BAA898','#75DDDD','#55505C','#B8C4BB','#663F46','#3C362A','#7FC6A4']
+        
       
     def column_card(self, col_name, bins = 10):
         if(self._obj[col_name].dtype != np.float64 and self._obj[col_name].dtype != np.int64):
@@ -21,13 +23,10 @@ class DataCard(object):
             return self.numerical_column_card(col_name, bins)
         
     def render_boxplots(self, col_name):
-        
         pd_series = self._obj[col_name]
         numerical_column_names = [c for c in self._obj.columns if(self._obj[c].dtype == np.float64 or self._obj[c].dtype == np.int64)]
-        colors_scheme = ['#000000', '#839788','#9368B7','#BAA898','#75DDDD','#55505C','#B8C4BB','#663F46','#3C362A','#7FC6A4']
 
         box_plots = ""
-        
         for numerical in numerical_column_names:
             data = [go.Box(y=self._obj[pd_series == i][numerical], 
                             name = i,
@@ -39,7 +38,7 @@ class DataCard(object):
                           ) for i in pd_series.unique()]
 
             layout = go.Layout(
-                colorway=colors_scheme,
+                colorway=self._color_scheme,
                 bargap=0.03,
                 margin=go.layout.Margin(
                     l=45,
@@ -51,7 +50,6 @@ class DataCard(object):
 
             config = {'displayModeBar': False}
             fig = go.Figure(data=data, layout=layout)
-            fig2 = go.Figure(data=data)
             plot_html2, plotdivid, width, height = _plot_html(
                 fig, config, "", 530, 200, True)
 
