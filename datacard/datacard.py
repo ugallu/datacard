@@ -13,10 +13,7 @@ init_notebook_mode(connected=True)
 class DataCard(object):
     def __init__(self, pandas_obj):
         self._obj = pandas_obj
-        self._colors = ['#000000', '#839788','#9368B7','#BAA898','#75DDDD',
-          '#55505C','#B8C4BB','#663F46','#3C362A','#7FC6A4']
-
-        
+      
     def column_card(self, col_name, bins = 10):
         if(self._obj[col_name].dtype != np.float64 and self._obj[col_name].dtype != np.int64):
             return self.categorical_column_card(col_name)
@@ -27,6 +24,7 @@ class DataCard(object):
         
         pd_series = self._obj[col_name]
         numerical_column_names = [c for c in self._obj.columns if(self._obj[c].dtype == np.float64 or self._obj[c].dtype == np.int64)]
+        colors_scheme = ['#000000', '#839788','#9368B7','#BAA898','#75DDDD','#55505C','#B8C4BB','#663F46','#3C362A','#7FC6A4']
 
         box_plots = ""
         
@@ -41,7 +39,7 @@ class DataCard(object):
                           ) for i in pd_series.unique()]
 
             layout = go.Layout(
-                colorway=self._colors,
+                colorway=colors_scheme,
                 bargap=0.03,
                 margin=go.layout.Margin(
                     l=45,
